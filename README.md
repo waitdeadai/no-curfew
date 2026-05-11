@@ -57,13 +57,16 @@ The model reads the repair template on the next turn, drops the rest framing, an
 
 ## Sister tools
 
-Part of a small series of single-purpose Claude Code hooks extracted from the [minmaxing](https://github.com/waitdeadai/minmaxing) governance harness:
+Part of the [LLM Dark Patterns Hooks](https://github.com/waitdeadai/llm-dark-patterns) suite:
 
-- [no-vibes](https://github.com/waitdeadai/no-vibes) — blocks the model from claiming work is finished without verification evidence.
-- [time-anchor](https://github.com/waitdeadai/time-anchor) — injects the local system clock into every session and prompt.
-- [minmaxing](https://github.com/waitdeadai/minmaxing) — the full governance harness these hooks were extracted from.
+- [no-vibes](https://github.com/waitdeadai/no-vibes) — false-success closeouts.
+- [time-anchor](https://github.com/waitdeadai/time-anchor) — training-cutoff date confusion.
+- [no-sycophancy](https://github.com/waitdeadai/no-sycophancy) — praise-spam at turn open.
+- [no-cliffhanger](https://github.com/waitdeadai/no-cliffhanger) — dangling permission-loop endings.
+- [llm-dark-patterns](https://github.com/waitdeadai/llm-dark-patterns) — umbrella catalog of the suite.
+- [minmaxing](https://github.com/waitdeadai/minmaxing) — the parent governance harness.
 
-The series shares one design principle: *out-of-band textual enforcement.* Bash inspects the model's outgoing text. The model can't argue with bash. Failure modes that have textual signatures get caught at the boundary instead of being hoped-against in-context.
+The suite shares one design principle: *out-of-band textual enforcement.* Bash inspects the model's outgoing text. The model can't argue with bash. Failure modes that have textual signatures get caught at the boundary instead of being hoped-against in-context.
 
 ## License
 
