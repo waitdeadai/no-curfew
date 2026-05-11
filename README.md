@@ -63,6 +63,7 @@ Part of the [LLM Dark Patterns Hooks](https://github.com/waitdeadai/llm-dark-pat
 - [time-anchor](https://github.com/waitdeadai/time-anchor) — training-cutoff date confusion.
 - [no-sycophancy](https://github.com/waitdeadai/no-sycophancy) — praise-spam at turn open.
 - [no-cliffhanger](https://github.com/waitdeadai/no-cliffhanger) — dangling permission-loop endings.
+- [honest-eta](https://github.com/waitdeadai/honest-eta) — vibe time estimates and linear-scaling parallelism claims.
 - [llm-dark-patterns](https://github.com/waitdeadai/llm-dark-patterns) — umbrella catalog of the suite.
 - [minmaxing](https://github.com/waitdeadai/minmaxing) — the parent governance harness.
 
