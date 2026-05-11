@@ -1,0 +1,31 @@
+{
+  "_comment": [
+    "Minimal Claude Code settings.json snippet to wire no-curfew.",
+    "Merge these `hooks` entries into your own .claude/settings.json.",
+    "If you already have hooks defined for these events, append the no-curfew command to the existing matchers' hook arrays."
+  ],
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/no-curfew.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/no-curfew.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

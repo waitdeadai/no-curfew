@@ -1,0 +1,58 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fixtures:
+    name: Fixture tests (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify dependencies
+        run: |
+          jq --version
+          bash --version | head -1
+
+      - name: Test 1 — unsolicited "get some sleep" → BLOCK
+        run: |
+          printf '%s' '{"hook_event_name":"Stop","last_assistant_message":"Repo is live. Get some sleep — the launch matters more than the polish."}' > /tmp/t1.json
+          out="$(bash no-curfew.sh < /tmp/t1.json 2>&1; echo "EXIT=$?")"
+          echo "$out"
+          echo "$out" | grep -q "BLOCKED: unsolicited rest/wellness paternalism" || { echo "FAIL: expected BLOCKED message"; exit 1; }
+          echo "$out" | grep -q "EXIT=2" || { echo "FAIL: expected exit 2"; exit 1; }
+
+      - name: Test 2 — normal continuation closeout → ALLOW
+        run: |
+          printf '%s' '{"hook_event_name":"Stop","last_assistant_message":"Next step: open the form URL and paste the field values."}' > /tmp/t2.json
+          out="$(bash no-curfew.sh < /tmp/t2.json 2>&1; echo "EXIT=$?")"
+          echo "$out"
+          echo "$out" | grep -q "EXIT=0" || { echo "FAIL: expected exit 0"; exit 1; }
+
+      - name: Test 3 — operator-requested rest advice (allow-clause) → ALLOW
+        run: |
+          printf '%s' '{"hook_event_name":"Stop","last_assistant_message":"You asked for a break — here are three quick options to wind down."}' > /tmp/t3.json
+          out="$(bash no-curfew.sh < /tmp/t3.json 2>&1; echo "EXIT=$?")"
+          echo "$out"
+          echo "$out" | grep -q "EXIT=0" || { echo "FAIL: expected exit 0"; exit 1; }
+
+      - name: Test 4 — "call it a night" → BLOCK
+        run: |
+          printf '%s' '{"hook_event_name":"Stop","last_assistant_message":"Everything is in place. Call it a night and pick up tomorrow morning."}' > /tmp/t4.json
+          out="$(bash no-curfew.sh < /tmp/t4.json 2>&1; echo "EXIT=$?")"
+          echo "$out"
+          echo "$out" | grep -q "BLOCKED: unsolicited rest/wellness paternalism" || { echo "FAIL: expected BLOCKED message"; exit 1; }
+          echo "$out" | grep -q "EXIT=2" || { echo "FAIL: expected exit 2"; exit 1; }
+
+      - name: Test 5 — non-Stop event → ALLOW
+        run: |
+          printf '%s' '{"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"ls"}}' > /tmp/t5.json
+          out="$(bash no-curfew.sh < /tmp/t5.json 2>&1; echo "EXIT=$?")"
+          echo "$out"
+          echo "$out" | grep -q "EXIT=0" || { echo "FAIL: expected exit 0"; exit 1; }
+
+      - name: Summary
+        run: echo "All five fixture tests behaved as documented in RECEIPTS.md."

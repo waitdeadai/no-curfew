@@ -1,0 +1,45 @@
+name: Bug report
+description: The hook fired when it shouldn't have, or didn't fire when it should have.
+labels: [bug]
+body:
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Minimal reproducer (JSON payload)
+      description: |
+        The smallest JSON payload that reproduces the behavior. Like the fixtures in RECEIPTS.md.
+      placeholder: |
+        {"hook_event_name":"Stop","last_assistant_message":"..."}
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: Exit code + full stderr from running `bash no-curfew.sh < reproducer.json`.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Exit code + stderr you expected, plus a one-line justification.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: jq-version
+    attributes:
+      label: jq version
+      placeholder: jq-1.7
+    validations:
+      required: true
+  - type: input
+    id: shell
+    attributes:
+      label: Shell + OS
+      placeholder: bash 5.1 on Ubuntu 24.04
+    validations:
+      required: true
